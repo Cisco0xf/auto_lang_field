@@ -80,11 +80,11 @@ class AutoLangField extends StatefulWidget {
     this.spellCheckConfiguration,
     this.magnifierConfiguration,
     this.keyboardType = TextInputType.text,
-    this.contextMenuBuilder,
-    this.enableInteractiveSelection = false,
+    this.contextMenuBuilder = _defaultContextMenuBuilder,
+    this.enableInteractiveSelection = true,
+    this.statesController,
     this.smartDashesType,
     this.smartQuotesType,
-    this.statesController,
   }) : assert(supportedLanguages.isNotEmpty, SUPPRTEDLANGUAGES);
 
   /// Callback that is triggered whenever the text changes and the detected language is updated.
@@ -159,11 +159,15 @@ class AutoLangField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.autocorrect}
   final bool autocorrect;
 
+  //////////////////////////////////////////////////////////
+
   /// {@macro flutter.services.TextInputConfiguration.smartDashesType}
   final SmartDashesType? smartDashesType;
 
   /// {@macro flutter.services.TextInputConfiguration.smartQuotesType}
   final SmartQuotesType? smartQuotesType;
+
+  //////////////////////////////////////////////////////////
 
   /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
   final bool enableSuggestions;
@@ -371,6 +375,15 @@ class AutoLangField extends StatefulWidget {
 
   final WidgetStatesController? statesController;
 
+  /// This fixs the tooltip menu issue that was not appears
+  /// as it was null
+  static Widget _defaultContextMenuBuilder(
+      BuildContext context, EditableTextState editableTextState) {
+    return AdaptiveTextSelectionToolbar.editableText(
+      editableTextState: editableTextState,
+    );
+  }
+
   @override
   State<AutoLangField> createState() => _AutoLangFieldState();
 }
@@ -542,9 +555,6 @@ class _AutoLangFieldState extends State<AutoLangField> {
     return Directionality(
       textDirection: _langTextDirection,
       child: TextField(
-        controller: widget.controller ?? TextEditingController(),
-
-        /// Properties that will be controlable through the package
         onChanged: (value) {
           _handleChangeAndDetectLanguage(value);
         },
@@ -552,6 +562,7 @@ class _AutoLangFieldState extends State<AutoLangField> {
         textAlign: _langTextAlign,
 
         /// Normal TextField properties
+        controller: widget.controller,
         key: widget.key,
         decoration: widget.decoration,
         autocorrect: widget.autocorrect,
@@ -561,6 +572,7 @@ class _AutoLangFieldState extends State<AutoLangField> {
         canRequestFocus: widget.canRequestFocus,
         clipBehavior: widget.clipBehavior,
         contentInsertionConfiguration: widget.contentInsertionConfiguration,
+        // Issue SOLVED
         contextMenuBuilder: widget.contextMenuBuilder,
         cursorColor: widget.cursorColor,
         cursorErrorColor: widget.cursorErrorColor,
@@ -570,6 +582,8 @@ class _AutoLangFieldState extends State<AutoLangField> {
         cursorWidth: widget.cursorWidth,
         dragStartBehavior: widget.dragStartBehavior,
         enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+        // It had an issue of not selected the part of the text
+        // Also no changing the position of the cursor    [SOLVED]
         enableInteractiveSelection: widget.enableInteractiveSelection,
         enableSuggestions: widget.enableSuggestions,
         enabled: widget.enabled,
@@ -618,3 +632,15 @@ class _AutoLangFieldState extends State<AutoLangField> {
     );
   }
 }
+
+/* 
+
+
+
+    
+## Package mechanism:
+
+> So simple you give it a supportedLanguage, then the algorithm catched the LanguageData from the Map and start to detect the language of the text then matching it with the RegExp from the LanguageData 
+After that the textPropertiesPerLanguage start to change the TextProperties inside the field according to the detected language
+
+ */
