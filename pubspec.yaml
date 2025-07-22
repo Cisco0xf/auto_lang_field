@@ -1,7 +1,23 @@
 name: auto_lang_field
-description: "A new Flutter package project."
+description: Detects input language in real-time using regex patterns and applies language-specific text properties automatically.
 version: 0.0.1
-homepage: null
+homepage: https://github.com/Cisco0xf/auto_lang_field.git
+repository: https://github.com/Cisco0xf/auto_lang_field.git
+issue_tracker: https://github.com/Cisco0xf/auto_lang_field/issues
+
+
+topics: [localization, flutter, regex, testfield]
+  
+
+platforms:
+  android:
+  ios:
+  windows:
+  macos:
+  linux:
+  web:
+
+
 
 environment:
   sdk: ^3.5.4

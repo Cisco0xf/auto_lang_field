@@ -401,7 +401,7 @@ class _AutoLangFieldState extends State<AutoLangField> {
   /// Better than the OLD approtch with a Bit O => O(n^2) and inner loop
   /// New has O(n) with single loop and Map<[LanguageCode], [LanguageData]> data structure
 
-  List<LanguageData> get _targetLanguage {
+  List<LanguageData> get _targetLanguages {
     List<LanguageData> targets = [];
 
     for (int l = 0; l < widget.supportedLanguages.length; l++) {
@@ -482,7 +482,7 @@ class _AutoLangFieldState extends State<AutoLangField> {
     LanguageData starterLang;
 
     try {
-      starterLang = _targetLanguage.firstWhere(
+      starterLang = _targetLanguages.firstWhere(
         (LanguageData lang) => lang == _detectedLang,
       );
     } catch (e) {
@@ -501,8 +501,8 @@ class _AutoLangFieldState extends State<AutoLangField> {
     /// Using the List of [LanguageCode] from the widget
     /// Check the matching LanguageRegExp and apply it to _detectedLangs
 
-    for (int i = 0; i < _targetLanguage.length; i++) {
-      final LanguageData targetLang = _targetLanguage[i];
+    for (int i = 0; i < _targetLanguages.length; i++) {
+      final LanguageData targetLang = _targetLanguages[i];
 
       if (targetLang.langRegExp.hasMatch(value)) {
         _detectedLang = targetLang;

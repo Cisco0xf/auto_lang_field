@@ -262,7 +262,6 @@ class _AutoLangFieldTesterState extends State<AutoLangFieldTester> {
               onLanguageDetected: (value, detectedLang) {
                 setState(() => detectedLangData = detectedLang);
               },
-              
               decoration: InputDecoration(
                 filled: true,
                 fillColor: AppColors.fillColor,
