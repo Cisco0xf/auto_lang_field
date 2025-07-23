@@ -6,7 +6,7 @@ repository: https://github.com/Cisco0xf/auto_lang_field.git
 issue_tracker: https://github.com/Cisco0xf/auto_lang_field/issues
 
 
-topics: [localization, flutter, regex, testfield]
+topics: [localization, flutter, regex, textfield]
   
 
 platforms:

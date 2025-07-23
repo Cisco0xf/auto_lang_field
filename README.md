@@ -180,7 +180,7 @@ This package uses RegExp-based detection, which may face limitations with some l
       // Add other customizations...
     };
    ```
-2. Use replace the old `Map` in the `_targetLanguages`:
+2. Replace the old `Map` in the `_targetLanguages`:
 
    - **Before**:
      

@@ -410,8 +410,6 @@ class _AutoLangFieldState extends State<AutoLangField> {
       final LanguageData singleTarget = languagesData[expectedCode]!;
 
       targets = <LanguageData>[...targets, singleTarget];
-
-      // log("Current Targets : $targets");
     }
 
     return targets;
@@ -491,6 +489,8 @@ class _AutoLangFieldState extends State<AutoLangField> {
 
     /// That mean that the language still the same
     /// And no need to update it, just change the value of the onchange
+    ///
+    /// Remove the punctuations and emojis from the value [0.0.2]
 
     if (starterLang.langRegExp.hasMatch(value)) {
       widget.onLanguageDetected?.call(value, _detectedLang);
@@ -529,7 +529,7 @@ class _AutoLangFieldState extends State<AutoLangField> {
 
     final List<LanguageCode> propCodes = _languageProperties!.keys.toList();
 
-    for (final langCode in propCodes) {
+    for (final LanguageCode langCode in propCodes) {
       if (_detectedLang.langCode == langCode) {
         defaultProp = _languageProperties![langCode]!;
       }
